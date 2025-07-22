@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: pocket_postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: pocket_area
+      POSTGRES_USER: pedro
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
