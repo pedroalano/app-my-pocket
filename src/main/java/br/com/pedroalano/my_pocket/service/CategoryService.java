@@ -35,6 +35,7 @@ public class CategoryService {
                 .name(request.name())
                 .categoryType(request.categoryType())
                 .user(user)
+                .order(request.order())
                 .build();
 
         var saved = categoryRepository.save(category);
@@ -50,6 +51,7 @@ public class CategoryService {
 
         category.setName(request.name());
         category.setCategoryType(request.categoryType());
+        category.setOrder(request.order());
         category.setUser(user);
 
         var updated = categoryRepository.save(category);
