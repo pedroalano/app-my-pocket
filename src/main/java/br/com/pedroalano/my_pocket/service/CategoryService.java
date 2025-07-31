@@ -29,8 +29,7 @@ public class CategoryService {
                 .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
-    public CategoryResponse create(Long userId,CategoryRequest request) {
-        User user = getUserId(userId);
+    public CategoryResponse create(User user,CategoryRequest request) {
         var category = Category.builder()
                 .name(request.name())
                 .categoryType(request.categoryType())
@@ -43,11 +42,9 @@ public class CategoryService {
         return CategoryResponse.from(saved);
     }
 
-    public CategoryResponse update(Long id, Long userId, CategoryRequest request) {
+    public CategoryResponse update(Long id, User user, CategoryRequest request) {
         var category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
-
-        User user = getUserId(userId);
 
         category.setName(request.name());
         category.setCategoryType(request.categoryType());
@@ -66,8 +63,4 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
-    private User getUserId(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
 }

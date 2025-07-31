@@ -21,10 +21,8 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryResponse>> list(@AuthenticationPrincipal Object userPrincipal) {
-        var user = (User) userPrincipal;
+    public ResponseEntity<List<CategoryResponse>> list(@AuthenticationPrincipal User user) {
         var categories = categoryService.findAllByUser(user.getId());
-
         return ResponseEntity.ok(categories);
     }
 
@@ -34,15 +32,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> create(@AuthenticationPrincipal Object userPrincipal, @Valid @RequestBody CategoryRequest request) {
-        var user = (User) userPrincipal;
-        return ResponseEntity.ok(categoryService.create(user.getId(),request));
+    public ResponseEntity<CategoryResponse> create(@AuthenticationPrincipal User user, @Valid @RequestBody CategoryRequest request) {
+        return ResponseEntity.ok(categoryService.create(user,request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryResponse> update(@AuthenticationPrincipal Object userPrincipal, @PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
-        var user = (User) userPrincipal;
-        return ResponseEntity.ok(categoryService.update(id,user.getId(),request));
+    public ResponseEntity<CategoryResponse> update(@AuthenticationPrincipal User user, @PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
+        return ResponseEntity.ok(categoryService.update(id,user,request));
     }
 
     @DeleteMapping("/{id}")
