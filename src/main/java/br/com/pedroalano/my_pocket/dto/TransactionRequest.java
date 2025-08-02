@@ -14,6 +14,7 @@ public record TransactionRequest(
         @NotNull @NotBlank String description,
         @NotNull TransactionType type,
         @NotNull TransactionStatus status,
-        @NotNull Long category
+        @NotNull Long category,
+        @NotNull Long account
 ) {
 }

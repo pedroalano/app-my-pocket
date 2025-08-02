@@ -5,6 +5,7 @@ import br.com.pedroalano.my_pocket.dto.AccountResponse;
 import br.com.pedroalano.my_pocket.model.User;
 import br.com.pedroalano.my_pocket.repository.AccountRepository;
 import br.com.pedroalano.my_pocket.service.AccountService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/accounts")
 @RequiredArgsConstructor
+@Tag(name = "Accounts")
 public class AccountController {
 
     private final AccountService accountService;

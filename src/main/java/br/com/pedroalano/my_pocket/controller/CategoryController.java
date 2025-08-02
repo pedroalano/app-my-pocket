@@ -5,6 +5,7 @@ import br.com.pedroalano.my_pocket.dto.CategoryResponse;
 import br.com.pedroalano.my_pocket.model.Category;
 import br.com.pedroalano.my_pocket.model.User;
 import br.com.pedroalano.my_pocket.service.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 @RequiredArgsConstructor
+@Tag(name = "Categories")
 public class CategoryController {
 
     private final CategoryService categoryService;

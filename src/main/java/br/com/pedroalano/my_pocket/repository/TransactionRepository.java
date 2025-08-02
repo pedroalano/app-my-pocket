@@ -18,6 +18,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
              AND (:status IS NULL OR t.status = :status)
              AND (:month IS NULL OR MONTH(t.date) = :month)
              AND (:year IS NULL OR YEAR(t.date) = :year)
+             AND (:accountId IS NULL OR t.account.id = :accountId)
             ORDER BY t.date DESC
             """)
     List<Transaction> findByStatusAndTypeAndUserIdOrderByDateDesc(
@@ -25,7 +26,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             @Param("type") TransactionType type,
             @Param("userId") Long userId,
             @Param("month") Integer month,
-            @Param("year") Integer year
+            @Param("year") Integer year,
+            @Param("account") Long accountId
     );
 
     @Query("""
@@ -33,12 +35,14 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             WHERE t.user.id = :userId
              AND (:month IS NULL OR MONTH(t.date) = :month)
              AND (:year IS NULL OR YEAR(t.date) = :year)
+             AND (:accountId IS NULL OR t.account.id = :accountId)
             ORDER BY t.date DESC
            """)
     List<Transaction> findByUseIdOrderByDateDesc(
             @Param("userId") Long userId,
             @Param("month") Integer month,
-            @Param("year") Integer year
+            @Param("year") Integer year,
+            @Param("account") Long accountId
     );
 
 }

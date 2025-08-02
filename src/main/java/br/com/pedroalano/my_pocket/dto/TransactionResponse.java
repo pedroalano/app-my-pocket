@@ -15,7 +15,8 @@ public record TransactionResponse(
         TransactionType type,
         TransactionStatus status,
         Long categoryId,
-        Long userId
+        Long userId,
+        Long accountId
 ) {
     public static TransactionResponse from(Transaction transaction) {
         return new TransactionResponse(
@@ -26,7 +27,8 @@ public record TransactionResponse(
                 transaction.getType(),
                 transaction.getStatus(),
                 transaction.getCategory().getId(),
-                transaction.getUser().getId()
+                transaction.getUser().getId(),
+                transaction.getAccount().getId()
         );
     }
 }

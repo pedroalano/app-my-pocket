@@ -6,6 +6,7 @@ import br.com.pedroalano.my_pocket.enumtype.TransactionStatus;
 import br.com.pedroalano.my_pocket.enumtype.TransactionType;
 import br.com.pedroalano.my_pocket.model.User;
 import br.com.pedroalano.my_pocket.service.TransactionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
+@Tag(name = "Transactions")
 public class TransactionController {
 
     private final TransactionService transactionService;
@@ -25,7 +27,8 @@ public class TransactionController {
     public ResponseEntity<List<TransactionResponse>> listTransactionExpensesAndPlanned(
             @AuthenticationPrincipal Object userPrincipal,
             @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year
+            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "account", required = false) Long account
     ) {
         var user = (User) userPrincipal;
         var transactions = transactionService.findByStatusAndTypeAndUserIdOrderByDateDesc(
@@ -33,7 +36,8 @@ public class TransactionController {
                 TransactionType.EXPENSE,
                 user.getId(),
                 month,
-                year
+                year,
+                account
         );
 
         return ResponseEntity.ok(transactions);
@@ -43,7 +47,8 @@ public class TransactionController {
     public ResponseEntity<List<TransactionResponse>> listTransactionExpensesAndActual(
             @AuthenticationPrincipal Object userPrincipal,
             @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year
+            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "account", required = false) Long account
 
     ) {
         var user = (User) userPrincipal;
@@ -52,7 +57,8 @@ public class TransactionController {
                 TransactionType.EXPENSE,
                 user.getId(),
                 month,
-                year
+                year,
+                account
         );
 
         return ResponseEntity.ok(transactions);
@@ -62,7 +68,8 @@ public class TransactionController {
     public ResponseEntity<List<TransactionResponse>> listTransactionIncomesAndPlanned(
             @AuthenticationPrincipal Object userPrincipal,
             @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year
+            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "account", required = false) Long account
     ) {
         var user = (User) userPrincipal;
         var transactions = transactionService.findByStatusAndTypeAndUserIdOrderByDateDesc(
@@ -70,7 +77,8 @@ public class TransactionController {
                 TransactionType.INCOME,
                 user.getId(),
                 month,
-                year
+                year,
+                account
         );
 
         return ResponseEntity.ok(transactions);
@@ -80,7 +88,8 @@ public class TransactionController {
     public ResponseEntity<List<TransactionResponse>> listTransactionIncomesAndActual(
             @AuthenticationPrincipal Object userPrincipal,
             @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year
+            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "account", required = false) Long account
     ) {
         var user = (User) userPrincipal;
         var transactions = transactionService.findByStatusAndTypeAndUserIdOrderByDateDesc(
@@ -88,7 +97,8 @@ public class TransactionController {
                 TransactionType.INCOME,
                 user.getId(),
                 month,
-                year
+                year,
+                account
         );
 
         return ResponseEntity.ok(transactions);
@@ -98,10 +108,11 @@ public class TransactionController {
     public ResponseEntity<List<TransactionResponse>> listTransaction(
             @AuthenticationPrincipal Object userPrincipal,
             @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year
+            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "account", required = false) Long account
     ) {
        var user = (User) userPrincipal;
-       var transactions = transactionService.findByUserIdOrderByDateDesc(user.getId(),month,year);
+       var transactions = transactionService.findByUserIdOrderByDateDesc(user.getId(),month,year,account);
 
        return ResponseEntity.ok(transactions);
     }
@@ -113,21 +124,19 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<TransactionResponse> create(
-            @AuthenticationPrincipal Object userPrincipal,
+            @AuthenticationPrincipal User user,
             @Valid @RequestBody TransactionRequest request
             ) {
-       var user = (User) userPrincipal;
-       return ResponseEntity.ok(transactionService.create(user.getId(), request));
+       return ResponseEntity.ok(transactionService.create(user, request));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TransactionResponse> update(
-            @AuthenticationPrincipal Object userPrincipal,
+            @AuthenticationPrincipal User user,
             @PathVariable Long id,
             @Valid @RequestBody TransactionRequest request
     ) {
-        var user = (User) userPrincipal;
-        return ResponseEntity.ok(transactionService.update(id, user.getId(), request));
+        return ResponseEntity.ok(transactionService.update(id, user, request));
     }
 
     @DeleteMapping("/{id}")
