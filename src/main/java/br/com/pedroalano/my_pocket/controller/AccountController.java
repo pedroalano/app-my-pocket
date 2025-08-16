@@ -3,7 +3,6 @@ package br.com.pedroalano.my_pocket.controller;
 import br.com.pedroalano.my_pocket.dto.AccountRequest;
 import br.com.pedroalano.my_pocket.dto.AccountResponse;
 import br.com.pedroalano.my_pocket.model.User;
-import br.com.pedroalano.my_pocket.repository.AccountRepository;
 import br.com.pedroalano.my_pocket.service.AccountService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
