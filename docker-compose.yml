@@ -13,3 +13,5 @@ services:
       POSTGRES_PASSWORD: secret
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+    stop_signal: SIGINT
+    stop_grace_period: 30s
