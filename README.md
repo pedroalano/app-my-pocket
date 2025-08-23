@@ -2,6 +2,8 @@
 
 My Pocket é uma aplicação de controle financeiro pessoal desenvolvida em Java com Spring Boot. O objetivo é permitir o gerenciamento de contas, categorias e transações financeiras de forma simples e segura.
 
+👉 Frontend do projeto: [my-pocket-frontend](https://github.com/pedroalano/my-pocket-frontend)
+
 ## Sumário
 
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
@@ -85,4 +87,4 @@ Pull requests são bem-vindos! Para maiores informações, abra uma issue ou ent
 
 ---
 
-Desenvolvido por Pedro Alano.
+👨‍💻 Desenvolvido por [Pedro Alano](https://github.com/pedroalano)
