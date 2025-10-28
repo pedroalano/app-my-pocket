@@ -27,7 +27,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             @Param("userId") Long userId,
             @Param("month") Integer month,
             @Param("year") Integer year,
-            @Param("account") Long accountId
+            @Param("accountId") Long accountId
     );
 
     @Query("""
@@ -42,7 +42,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             @Param("userId") Long userId,
             @Param("month") Integer month,
             @Param("year") Integer year,
-            @Param("account") Long accountId
+            @Param("accountId") Long accountId
     );
 
 }

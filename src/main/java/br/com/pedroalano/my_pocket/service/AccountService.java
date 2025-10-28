@@ -17,7 +17,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
 
     public List<AccountResponse> findAllByUser(User user) {
-        return accountRepository.findByUserId(user.getId()).stream()
+        return accountRepository.findByUserIdOrderByOrder(user.getId()).stream()
                 .map(AccountResponse::from).toList();
     }
 

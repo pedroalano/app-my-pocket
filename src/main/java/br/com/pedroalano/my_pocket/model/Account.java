@@ -16,6 +16,9 @@ public class Account {
 
     private String name;
 
+    @Column(name = "sort_order")
+    private Integer order;
+
     @ManyToOne
     private User user;
 }

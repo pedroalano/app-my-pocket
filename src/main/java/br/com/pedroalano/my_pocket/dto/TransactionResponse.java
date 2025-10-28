@@ -15,6 +15,7 @@ public record TransactionResponse(
         TransactionType type,
         TransactionStatus status,
         Long categoryId,
+        String categoryName,
         Long userId,
         Long accountId
 ) {
@@ -27,6 +28,7 @@ public record TransactionResponse(
                 transaction.getType(),
                 transaction.getStatus(),
                 transaction.getCategory().getId(),
+                transaction.getCategory().getName(),
                 transaction.getUser().getId(),
                 transaction.getAccount().getId()
         );

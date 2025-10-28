@@ -23,96 +23,17 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @GetMapping("/expenses/planned")
-    public ResponseEntity<List<TransactionResponse>> listTransactionExpensesAndPlanned(
-            @AuthenticationPrincipal Object userPrincipal,
-            @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "account", required = false) Long account
-    ) {
-        var user = (User) userPrincipal;
-        var transactions = transactionService.findByStatusAndTypeAndUserIdOrderByDateDesc(
-                TransactionStatus.PLANNED,
-                TransactionType.EXPENSE,
-                user.getId(),
-                month,
-                year,
-                account
-        );
-
-        return ResponseEntity.ok(transactions);
-    }
-
-    @GetMapping("/expenses/actual")
-    public ResponseEntity<List<TransactionResponse>> listTransactionExpensesAndActual(
-            @AuthenticationPrincipal Object userPrincipal,
-            @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "account", required = false) Long account
-
-    ) {
-        var user = (User) userPrincipal;
-        var transactions = transactionService.findByStatusAndTypeAndUserIdOrderByDateDesc(
-                TransactionStatus.ACTUAL,
-                TransactionType.EXPENSE,
-                user.getId(),
-                month,
-                year,
-                account
-        );
-
-        return ResponseEntity.ok(transactions);
-    }
-
-    @GetMapping("/incomes/planned")
-    public ResponseEntity<List<TransactionResponse>> listTransactionIncomesAndPlanned(
-            @AuthenticationPrincipal Object userPrincipal,
-            @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "account", required = false) Long account
-    ) {
-        var user = (User) userPrincipal;
-        var transactions = transactionService.findByStatusAndTypeAndUserIdOrderByDateDesc(
-                TransactionStatus.PLANNED,
-                TransactionType.INCOME,
-                user.getId(),
-                month,
-                year,
-                account
-        );
-
-        return ResponseEntity.ok(transactions);
-    }
-
-    @GetMapping("/incomes/actual")
-    public ResponseEntity<List<TransactionResponse>> listTransactionIncomesAndActual(
-            @AuthenticationPrincipal Object userPrincipal,
-            @RequestParam(value = "month", required = false) Integer month,
-            @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "account", required = false) Long account
-    ) {
-        var user = (User) userPrincipal;
-        var transactions = transactionService.findByStatusAndTypeAndUserIdOrderByDateDesc(
-                TransactionStatus.ACTUAL,
-                TransactionType.INCOME,
-                user.getId(),
-                month,
-                year,
-                account
-        );
-
-        return ResponseEntity.ok(transactions);
-    }
-
     @GetMapping
     public ResponseEntity<List<TransactionResponse>> listTransaction(
             @AuthenticationPrincipal Object userPrincipal,
             @RequestParam(value = "month", required = false) Integer month,
             @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "type", required = false) TransactionType type,
+            @RequestParam(value = "status", required = false) TransactionStatus status,
             @RequestParam(value = "account", required = false) Long account
     ) {
        var user = (User) userPrincipal;
-       var transactions = transactionService.findByUserIdOrderByDateDesc(user.getId(),month,year,account);
+       var transactions = transactionService.findByStatusAndTypeAndUserIdOrderByDateDesc(status, type, user.getId(), month, year, account);
 
        return ResponseEntity.ok(transactions);
     }
@@ -127,6 +48,7 @@ public class TransactionController {
             @AuthenticationPrincipal User user,
             @Valid @RequestBody TransactionRequest request
             ) {
+        System.out.println(request  );
        return ResponseEntity.ok(transactionService.create(user, request));
     }
 
